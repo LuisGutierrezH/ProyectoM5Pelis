@@ -5,8 +5,9 @@ import "./movies.css"
 export default function Movies(props) {
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState();
-  const [searchState, setSearch] = useState("");
   const [pelisFilter, setPelisFilter] = useState([]);
+  const [search, setSearch] = useState("");
+
 
   useEffect(() => {
     if (loading) {
@@ -15,6 +16,7 @@ export default function Movies(props) {
         .then((data) => {
           console.log(data);
           setData(data);
+          setPelisFilter(data.peliculas);
           setLoading(false);
         });
     }
@@ -27,7 +29,7 @@ export default function Movies(props) {
     if (!value) {
       setPelisFilter(data.peliculas);
     } else {
-      const filterMovies = data.peliculas.filter((movie) => movie.titulo.toLowerCase().includes(searchState.toLowerCase()));
+      const filterMovies = data.peliculas.filter((movie) => movie.titulo.toLowerCase().includes(search.toLowerCase()));
       setPelisFilter(filterMovies);
     }
 
